@@ -1,5 +1,22 @@
-const isChrome = /chrome/.test(navigator.userAgent.toLowerCase())
-export const browser = isChrome ? chrome : browser
+export const isChrome = /chrome/.test(navigator.userAgent.toLowerCase())
+
+const allBrowser = isChrome ? chrome : browser
+
+export const onMessage = handler => {
+  const polyfill = (res, sender, sendResponse) => {
+    const messageRes = handler(res, sender, sendResponse)
+
+    if (isChrome && messageRes instanceof Promise) {
+      messageRes.then(sendResponse)
+      return true
+    } else {
+      return messageRes
+    }
+  }
+
+  return allBrowser.runtime.onMessage.addListener(polyfill)
+}
+
 /**
  *
  *
@@ -11,7 +28,7 @@ export const browser = isChrome ? chrome : browser
 
 export const fetchData = (url, init, cache = true) => {
   return new Promise(resolve => {
-    browser.runtime.sendMessage({ type: 'fetch', url, init, cache }, resolve)
+    allBrowser.runtime.sendMessage({ type: 'fetch', url, init, cache }, resolve)
   })
 }
 

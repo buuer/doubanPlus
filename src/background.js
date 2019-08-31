@@ -1,4 +1,4 @@
-import { browser } from './tools'
+import { onMessage } from './tools'
 
 const dataCache = (function cache() {
   const cacheMap = Object.create(null)
@@ -8,7 +8,7 @@ const dataCache = (function cache() {
   })
 })()
 
-browser.runtime.onMessage.addListener((res, sender, sendResponse) => {
+onMessage((res, sender, sendResponse) => {
   if (res.type === 'fetch') {
     const isCached = dataCache.get(res.url)
     if (res.cache === true && isCached) {
