@@ -1,6 +1,8 @@
 node_modules
 .vscode 
 yarn-error.log
+.pnp.js
+.pnp
 
 /web-ext-artifacts
 /dist

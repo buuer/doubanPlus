@@ -1,6 +1,6 @@
 {
   "name": "douban_plus",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "douban imdb ",
   "keywords": [
     "douban"
@@ -11,12 +11,15 @@
     "rollup:dev": "yarn rollup:build -w",
     "rollup:build": "rollup -c ./rollup.config.js",
     "ext:dev": "web-ext run --source-dir ./dist/  --start-url https://movie.douban.com/",
-    "ext:build": "yarn && yarn rollup:build && web-ext build --overwrite-dest --source-dir ./dist/  "
+    "ext:build": "yarn --pnp && yarn rollup:build && web-ext build --overwrite-dest --source-dir ./dist/  "
   },
   "devDependencies": {
     "fs-extra": "^8.1.0",
     "rollup": "^1.17.0",
     "rollup-plugin-terser": "^5.1.1",
     "web-ext": "^3.1.1"
+  },
+  "installConfig": {
+    "pnp": true
   }
 }
