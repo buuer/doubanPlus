@@ -33,8 +33,7 @@ function setImdbRating({ ratingValue, ratingCount }) {
   imdbRatingDom.innerHTML = `
     / <span style="color: #ffac2d"> ${ratingValue} ★ </span> 
     / ${ratingCount} 人评价`
-
-  insertAfter(imdbRatingDom, "a[href^='http://www.imdb.com']")
+  insertAfter(imdbRatingDom, "a[href^='https://www.imdb.com']")
 }
 
 function setMPAA({ MPAA, imdbId }) {
