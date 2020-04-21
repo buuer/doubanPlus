@@ -6,9 +6,9 @@ import {
   fetchData,
   setLocalStorage,
   getLocalStorage,
-  log,
   createEl,
   findAndRemove,
+  safeMatch,
 } from './tools.js'
 import localSearchLink from './config.json'
 ;(function main() {
@@ -16,7 +16,7 @@ import localSearchLink from './config.json'
     const doubanInfo = getDoubanInfo()
     castrateWarning(doubanInfo)
 
-    getSearchLinkUpdate()
+    updateSearchLink()
 
     getSearchLink().then((searchLink) =>
       addDownloadLink(Object.assign({ searchLink }, doubanInfo))
@@ -37,27 +37,28 @@ import localSearchLink from './config.json'
 
 function getSearchLink() {
   return getLocalStorage('searchLink').then(
-    ({ searchLink }) =>
-      searchLink && searchLink.length ? searchLink : localSearchLink,
+    ({ searchLink }) => {
+      return searchLink && searchLink.list && searchLink.list.length
+        ? searchLink.list
+        : localSearchLink
+    },
     () => localSearchLink
   )
 }
 
-function getSearchLinkUpdate() {
-  getLocalStorage('searchLink').then(({ expiresAt }) => {
-    if (expiresAt && expiresAt > Date.now()) return
+function updateSearchLink() {
+  getLocalStorage('searchLink').then(({ searchLink }) => {
+    if (searchLink && searchLink.expiresAt && searchLink.expiresAt > Date.now())
+      return
 
     fetchData(
       'https://raw.githubusercontent.com/buuer/doubanPlus/master/src/config.json'
     ).then((searchLink) => {
       if (searchLink) {
-        setLocalStorage(
-          'searchLink',
-          JSON.parse({
-            searchLink,
-            expiresAt: Date.now() + 10 * 24 * 60 * 60 * 1000,
-          })
-        )
+        setLocalStorage('searchLink', {
+          list: JSON.parse(searchLink),
+          expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        })
       }
     })
   })
@@ -185,9 +186,10 @@ function addDownloadLink({
 
   asideDownloadEL.addEventListener('click', (ev) => {
     if (isTvShow && /rarbg/.test(ev.target.href)) {
+      const rarbgDomain = safeMatch(ev.target.href, /^http.+\//, 0)
       ev.preventDefault()
       getFirstSeasonImdbId().then((id) =>
-        openLink(`https://rarbg.to/tv/${id}/`)
+        openLink(rarbgDomain + 'tv/' + id + '/')
       )
     }
   })
