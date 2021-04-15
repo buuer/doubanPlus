@@ -24,7 +24,7 @@
   },
   {
     "name": "字幕库",
-    "link": "https://zmk.pw/search?q=${searchTitle}"
+    "link": "http://zmk.pw/search?q=${searchTitle}"
   },
   {
     "name": "伪射手",
