@@ -1,17 +1,36 @@
-import { safeMatch, fetchData } from './tools'
+import { safeMatch, fetchData, getLocalStorage, setLocalStorage } from './tools'
 
-export const getImdbInfo = (imdbId) =>
-  fetchImdb(imdbId).then((html) => {
-    const rate = safeMatch(html, /parentalguide.*?>(.+?)<\/a/).trim()
-
-    return {
-      imdbId,
-      rate,
-      MPAA: MPAAList[rate] || {},
-      ratingValue: safeMatch(html, /RatingScore.*?>(.+?)<\/span>/),
-      ratingCount: safeMatch(html, /RatingAmount.*?>(.+?)<\/div>/),
+export const getImdbInfo = (imdbId) => {
+  const storageKey = 'IMDb-' + imdbId
+  return getLocalStorage(storageKey).then((cache) => {
+    const cacheInfo = cache[storageKey]
+    if (cacheInfo && cacheInfo.updateAt > Date.now() - 86400000) {
+      return cacheInfo
     }
+
+    return fetchImdb(imdbId).then((html) => {
+      const version = getVersion(html)
+      const rate = getRate(html, { version })
+
+      const imdbInfo = {
+        imdbId,
+        updateAt: Date.now(),
+        ...rate,
+      }
+
+      const allget = Object.keys(imdbInfo).every((key) => !!imdbInfo[key])
+
+      if (allget) {
+        setLocalStorage(storageKey, imdbInfo)
+      }
+
+      return {
+        ...imdbInfo,
+        MPAA: MPAAList[rate.parentalguide] || {},
+      }
+    })
   })
+}
 
 const fetchImdb = (imdbId) =>
   fetchData('https://www.imdb.com/title/' + imdbId + '/')
@@ -55,3 +74,19 @@ const MPAAList = Object.assign(
     return pre
   }, {})
 )
+
+const getVersion = (html) => (/styleguide-v2/.test(html) ? 'v2' : 'new')
+
+const getRate = (html, { version = 'new' }) => {
+  return version === 'v2'
+    ? {
+        ratingValue: safeMatch(html, /ratingValue.*?>(.+?)<\/span>/),
+        ratingCount: safeMatch(html, /ratingCount.*?>(.+?)<\/span>/),
+        parentalguide: safeMatch(html, /subtext.*?>\s*?(.*?)\s*?</).trim(),
+      }
+    : {
+        ratingValue: safeMatch(html, /RatingScore.*?>(.+?)<\/span>/),
+        ratingCount: safeMatch(html, /RatingAmount.*?>(.+?)<\/div>/),
+        parentalguide: safeMatch(html, /parentalguide.*?>(.+?)<\/a/).trim(),
+      }
+}
