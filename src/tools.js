@@ -26,9 +26,9 @@ export const onMessage = (handler) => {
  * @returns
  */
 
-export const fetchData = (url, init, cache = true) => {
+export const fetchData = (url, init) => {
   return new Promise((resolve) => {
-    allBrowser.runtime.sendMessage({ type: 'fetch', url, init, cache }, resolve)
+    allBrowser.runtime.sendMessage({ type: 'fetch', url, init }, resolve)
   })
 }
 
