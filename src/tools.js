@@ -76,14 +76,11 @@ export const comporse = (fns) => (arg) =>
   fns.reduceRight((preRes, curFn) => curFn(preRes), arg)
 
 export const openLink = (link) => {
-  const linkEl = createEl({
-    tag: 'a',
-    attr: {
-      href: link,
-      target: '_blank',
-      rel: 'nofollow',
-      style: 'disaple:none',
-    },
+  const linkEl = createLinkEl({
+    link,
+    text: '',
+    create: true,
+    attr: { style: 'disaple:none' },
   })
 
   document.body.appendChild(linkEl)
@@ -122,3 +119,17 @@ export const createEl = ({ tag = 'div', attr = {}, children = '' }) => {
 
 export const log = (name) => (content) =>
   console.log('log-', name, ': ', content)
+
+export const createLinkEl = ({
+  link,
+  text = link,
+  create = false,
+  attr = {},
+}) => {
+  const linkEl = {
+    tag: 'a',
+    attr: { target: '_blank', rel: 'nofollow', href: link, ...attr },
+    children: text,
+  }
+  return create ? createEl(linkEl) : linkEl
+}

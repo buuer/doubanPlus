@@ -9,10 +9,13 @@ import {
   createEl,
   findAndRemove,
   safeMatch,
+  createLinkEl,
 } from './tools.js'
 import localSearchLink from './config.json'
 ;(function main() {
   try {
+    fixIMDbId()
+
     const doubanInfo = getDoubanInfo()
     castrateWarning(doubanInfo)
 
@@ -107,16 +110,11 @@ function setMPAA({ MPAA, imdbId }) {
     attr: { class: 'MPAADom' },
     children: [
       { tag: 'span', attr: { class: 'pl' }, children: 'MPAA评级:' },
-      {
-        tag: 'a',
-        attr: {
-          target: '_blank',
-          rel: 'nofollow',
-          title: MPAA.pop,
-          href: 'https://www.imdb.com/title/' + imdbId + '/parentalguide',
-        },
-        children: MPAA.label,
-      },
+      createLinkEl({
+        link: 'https://www.imdb.com/title/' + imdbId + '/parentalguide',
+        text: MPAA.label,
+        attr: { title: MPAA.pop },
+      }),
       { tag: 'br' },
     ],
   })
@@ -148,15 +146,7 @@ function addDownloadLink({
       .replace('${imdbId}', imdbId)
       .replace('${title}', title)
 
-    return {
-      tag: 'a',
-      attr: {
-        href: rLink,
-        target: '_blank',
-        rel: 'nofollow',
-      },
-      children: name,
-    }
+    return createLinkEl({ link: rLink, text: name })
   }
 
   findAndRemove('.asideDownloadEL')
@@ -195,4 +185,21 @@ function addDownloadLink({
   })
 
   insertAfter(asideDownloadEL, '.tags')
+}
+
+function fixIMDbId() {
+  const imdbTag = []
+    .concat(...document.querySelectorAll('#info .pl'))
+    .find((el) => /IMDb/.test(el.textContent))
+
+  const nextEl = imdbTag.nextSibling
+  const imdbId = nextEl.textContent.trim()
+
+  const imdbLink = createLinkEl({
+    link: 'https://www.imdb.com/title/' + imdbId,
+    text: ' ' + imdbId,
+    create: true,
+  })
+
+  imdbTag.nextSibling.replaceWith(imdbLink)
 }
