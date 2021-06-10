@@ -14,10 +14,9 @@ import {
 import localSearchLink from './config.json'
 ;(function main() {
   try {
-    fixIMDbId()
-
     const doubanInfo = getDoubanInfo()
     castrateWarning(doubanInfo)
+    fixIMDbId()
 
     updateSearchLink()
 

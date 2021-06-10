@@ -13,11 +13,12 @@ export const getDoubanInfo = () => {
     isTvShow,
     title: getTitle(),
     isCastrate: isCastrate(infoNode),
-    getFirstSeasonImdbId: () => getFirstSeasonImdbId({ doubanId, imdbId })
+    getFirstSeasonImdbId: () => getFirstSeasonImdbId({ doubanId, imdbId }),
   }
 }
 
-const getImdbId = docText => safeMatch(docText, /www.imdb.com\/title\/(\w+)?"/)
+const getImdbId = (docText) =>
+  safeMatch(docText, /class="pl">IMDb:.*?<\/span>(.+?)</).trim()
 
 const getDoubanId = () =>
   safeMatch(window.location.pathname, /\/subject\/(\w+)(\/|$)/)
@@ -44,7 +45,6 @@ const getFirstSeasonImdbId = ({ doubanId, imdbId }) => {
   if (fsId === doubanId) return Promise.resolve(imdbId)
 
   return fetch('https://movie.douban.com/subject/' + fsId + '/')
-    .then(res => res.text())
-    .then(text => safeMatch(text, /id="info">([\s\S]*?)<\/div>/))
+    .then((res) => res.text())
     .then(getImdbId)
 }
