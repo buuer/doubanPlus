@@ -18,7 +18,7 @@ export const getDoubanInfo = () => {
 }
 
 const getImdbId = (docText) =>
-  safeMatch(docText, /class="pl">IMDb:.*?<\/span>(.+?)</).trim()
+  safeMatch(docText, /class="pl">IMDb:.*?>(?:<.*?>)?(.+?)</).trim()
 
 const getDoubanId = () =>
   safeMatch(window.location.pathname, /\/subject\/(\w+)(\/|$)/)
