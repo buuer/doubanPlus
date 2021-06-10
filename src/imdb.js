@@ -2,14 +2,14 @@ import { safeMatch, fetchData } from './tools'
 
 export const getImdbInfo = (imdbId) =>
   fetchImdb(imdbId).then((html) => {
-    const rate = safeMatch(html, /class="subtext">([\D\d]+?)</).trim()
-    console.log('rate', rate)
+    const rate = safeMatch(html, /parentalguide.*?>(.+?)<\/a/).trim()
+
     return {
       imdbId,
       rate,
       MPAA: MPAAList[rate] || {},
-      ratingValue: safeMatch(html, /itemprop="ratingValue">([\D\d]+?)<\/span>/),
-      ratingCount: safeMatch(html, /itemprop="ratingCount">([\D\d]+?)<\/span>/),
+      ratingValue: safeMatch(html, /RatingScore.*?>(.+?)<\/span>/),
+      ratingCount: safeMatch(html, /RatingAmount.*?>(.+?)<\/div>/),
     }
   })
 
@@ -30,18 +30,15 @@ const MPAAList = Object.assign(
   {
     G: {
       label: 'G 一般观众',
-      pop:
-        '所有年龄皆可观赏。电影中不含或仅含少量会让家长在让儿童观赏时感到被冒犯的内容。',
+      pop: '所有年龄皆可观赏。电影中不含或仅含少量会让家长在让儿童观赏时感到被冒犯的内容。',
     },
     PG: {
       label: 'PG 建议家长指导',
-      pop:
-        '有些内容可能不适合儿童。由于影片包含部分家长可能认为不适合儿童的内容，因此建议家长在可同时进行指导。',
+      pop: '有些内容可能不适合儿童。由于影片包含部分家长可能认为不适合儿童的内容，因此建议家长在可同时进行指导。',
     },
     'PG-13': {
       label: 'PG-13 家长需特别注意',
-      pop:
-        '由于影片包含部分家长可能认为不适合13岁以下观看的内容，因此建议家长需特别注意。',
+      pop: '由于影片包含部分家长可能认为不适合13岁以下观看的内容，因此建议家长需特别注意。',
     },
     R: {
       label: 'R 限制级',
