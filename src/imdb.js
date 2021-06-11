@@ -24,13 +24,12 @@ export const getImdbInfo = (imdbId) => {
         setLocalStorage(storageKey, imdbInfo)
       }
 
-      return {
-        ...imdbInfo,
-        MPAA: MPAAList[rate.parentalguide] || {},
-      }
+      return imdbInfo
     })
   })
 }
+
+export const getMPAA = ({ parentalguide }) => MPAAList[parentalguide] || {}
 
 const fetchImdb = (imdbId) =>
   fetchData('https://www.imdb.com/title/' + imdbId + '/')

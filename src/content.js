@@ -1,5 +1,5 @@
 import { getDoubanInfo } from './douban.js'
-import { getImdbInfo } from './imdb.js'
+import { getImdbInfo, getMPAA } from './imdb.js'
 import {
   insertAfter,
   openLink,
@@ -27,7 +27,10 @@ import localSearchLink from './config.json'
     getImdbInfo(doubanInfo.imdbId)
       .then((imdbInfo) => {
         setImdbRating(Object.assign({}, imdbInfo, doubanInfo))
-        setMPAA(imdbInfo)
+        setMPAA({
+          imdbId: imdbInfo.imdbId,
+          MPAA: getMPAA(imdbInfo),
+        })
       })
       .catch((err) => {
         console.error(err)
@@ -101,7 +104,7 @@ function setImdbRating({ ratingValue, ratingCount }) {
 }
 
 function setMPAA({ MPAA, imdbId }) {
-  if (!MPAA.label || !imdbId) return
+  if (!MPAA || !MPAA.label || !imdbId) return
   findAndRemove('.MPAADom')
 
   const MPAADom = createEl({
