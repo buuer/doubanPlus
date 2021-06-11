@@ -88,10 +88,19 @@ export const openLink = (link) => {
   linkEl.remove()
 }
 
-export const getLocalStorage = (key) => allBrowser.storage.local.get(key)
+export const getLocalStorage = (key) =>
+  isChrome
+    ? new Promise((resolve) =>
+        allBrowser.storage.local.get(key, (v) => resolve(v))
+      )
+    : allBrowser.storage.local.get(key)
 
 export const setLocalStorage = (key, val) =>
-  allBrowser.storage.local.set({ [key]: val })
+  isChrome
+    ? new Promise((resolve) =>
+        allBrowser.storage.local.set({ [key]: val }, () => resolve())
+      )
+    : allBrowser.storage.local.set({ [key]: val })
 
 export const findAndRemove = (className) => {
   const el = document.querySelector(className)
