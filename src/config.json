@@ -12,10 +12,6 @@
     "link": "https://thepiratebay.org/search.php?q=${imdbId}"
   },
   {
-    "name": "KickAss",
-    "link": "https://katcr.co/katsearch/page/1/${title}"
-  },
-  {
     "name": "yourbittorrent",
     "link": "https://yourbittorrent.com/?q=${title}"
   },
