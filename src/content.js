@@ -17,6 +17,7 @@ import localSearchLink from './config.json'
     const doubanInfo = getDoubanInfo()
     castrateWarning(doubanInfo)
     fixIMDbId()
+    fixVotesNum()
 
     updateSearchLink()
 
@@ -115,7 +116,7 @@ function setMPAA({ MPAA, imdbId }) {
       createLinkEl({
         link: 'https://www.imdb.com/title/' + imdbId + '/parentalguide',
         text: MPAA.label,
-        attr: { title: MPAA.pop },
+        attr: { title: MPAA.pop, style: 'margin-left: 5px;' },
       }),
       { tag: 'br' },
     ],
@@ -186,7 +187,14 @@ function addDownloadLink({
     }
   })
 
-  insertAfter(asideDownloadEL, '.tags')
+  const insertEl = document.querySelector('#subject-doulist')
+  const asideEl = document.querySelector('.aside')
+
+  if (insertEl) {
+    insertAfter(asideDownloadEL, insertEl)
+  } else if (asideEl) {
+    asideEl.appendChild(asideDownloadEL)
+  }
 }
 
 function fixIMDbId() {
@@ -199,9 +207,18 @@ function fixIMDbId() {
 
   const imdbLink = createLinkEl({
     link: 'https://www.imdb.com/title/' + imdbId,
-    text: ' ' + imdbId,
+    text: imdbId,
     create: true,
+    attr: { style: 'margin-left: 5px;' },
   })
 
   imdbTag.nextSibling.replaceWith(imdbLink)
+}
+
+function fixVotesNum() {
+  const votesEl = document.querySelector('.rating_sum [property="v:votes"]')
+  if (!votesEl) return
+  const votesNum = votesEl.textContent.trim()
+  if (!/^\d{3,}$/.test(votesNum)) return
+  votesEl.textContent = Number(votesNum).toLocaleString()
 }
