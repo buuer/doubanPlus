@@ -8,19 +8,19 @@
   "author": "buuer",
   "license": "MIT",
   "scripts": {
-    "rollup:dev": "yarn rollup:build -w",
+    "rollup:dev": "rollup -c ./rollup.config.js -w",
     "rollup:build": "rollup -c ./rollup.config.js",
-    "ext:dev": "yarn web-ext run --source-dir ./dist/  --start-url https://movie.douban.com/",
-    "ext:build": "yarn --pnp && yarn rollup:build && yarn web-ext build --overwrite-dest --source-dir ./dist/  "
+    "ext:dev": "web-ext run --source-dir ./dist/  --start-url https://movie.douban.com/",
+    "ext:build": "web-ext build --overwrite-dest --source-dir ./dist/",
+    "bulid": "npm-run-all rollup:build ext:build",
+    "dev": "npm-run-all -p rollup:dev ext:dev"
   },
   "devDependencies": {
-    "@rollup/plugin-json": "^4.0.3",
-    "fs-extra": "^8.1.0",
-    "rollup": "^2.6.1",
-    "rollup-plugin-terser": "^5.3.0",
-    "web-ext": "^4.1.0"
-  },
-  "installConfig": {
-    "pnp": true
+    "@rollup/plugin-json": "^4.1.0",
+    "fs-extra": "^10.0.0",
+    "npm-run-all": "^4.1.5",
+    "rollup": "^2.67.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "web-ext": "^6.6.0"
   }
 }
