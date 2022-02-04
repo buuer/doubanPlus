@@ -1,6 +1,6 @@
 {
   "name": "douban_plus",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "douban imdb ",
   "keywords": [
     "douban"
@@ -12,7 +12,7 @@
     "rollup:build": "rollup -c ./rollup.config.js",
     "ext:dev": "web-ext run --source-dir ./dist/  --start-url https://movie.douban.com/",
     "ext:build": "web-ext build --overwrite-dest --source-dir ./dist/",
-    "bulid": "npm-run-all rollup:build ext:build",
+    "build": "npm-run-all rollup:build ext:build",
     "dev": "npm-run-all -p rollup:dev ext:dev"
   },
   "devDependencies": {
