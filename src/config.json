@@ -12,10 +12,6 @@
     "link": "https://thepiratebay.org/search.php?q=${imdbId}"
   },
   {
-    "name": "yourbittorrent",
-    "link": "https://yourbittorrent.com/?q=${title}"
-  },
-  {
     "line": true
   },
   {
