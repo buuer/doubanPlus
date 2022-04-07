@@ -84,8 +84,14 @@ const getRate = (html, { version = 'new' }) => {
         parentalguide: safeMatch(html, /subtext.*?>\s*?(.*?)\s*?</).trim(),
       }
     : {
-        ratingValue: safeMatch(html, /RatingScore.*?>(.+?)<\/span>/),
-        ratingCount: safeMatch(html, /RatingAmount.*?>(.+?)<\/div>/),
+        ratingValue: safeMatch(
+          html,
+          /hero-rating-bar__aggregate-rating__score".*?\>.*?>(.*?)</
+        ).trim(),
+        ratingCount: safeMatch(
+          html,
+          /hero-rating-bar__aggregate-rating__score".*?\>.*?\/div>.*?\/div>.*?>(.*?)</
+        ),
         parentalguide: safeMatch(html, /parentalguide.*?>(.+?)<\/a/).trim(),
       }
 }
