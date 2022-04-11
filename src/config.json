@@ -5,7 +5,7 @@
   },
   {
     "name": "RARBG",
-    "link": "https://rarbg.to/torrents.php?imdb=${imdbId}"
+    "link": "https://rarbg.to/torrents.php?imdb=${imdbId}&order=seeders&by=DESC"
   },
   {
     "name": "thepiratebay",
@@ -13,10 +13,6 @@
   },
   {
     "line": true
-  },
-  {
-    "name": "字幕库",
-    "link": "http://zmk.pw/search?q=${searchTitle}"
   },
   {
     "name": "伪射手",
