@@ -17,5 +17,9 @@
   {
     "name": "伪射手",
     "link": "https://secure.assrt.net/sub/?searchword=${searchTitle}"
+  },
+  {
+    "name": "字幕库",
+    "link": "https://zimuku.org/search?q=${searchTitle}"
   }
 ]
