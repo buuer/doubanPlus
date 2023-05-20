@@ -21,5 +21,9 @@
   {
     "name": "字幕库",
     "link": "https://zimuku.org/search?q=${searchTitle}"
+  },
+  {
+    "name": "SubHD",
+    "link": "https://subhd.tv/search/${searchTitle}"
   }
 ]
