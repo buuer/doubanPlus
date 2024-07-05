@@ -1,13 +1,5 @@
 [
   {
-    "name": "音范丝",
-    "link": "http://www.yinfans.me/?s=${searchTitle}"
-  },
-  {
-    "name": "RARBG",
-    "link": "https://rarbg.to/torrents.php?imdb=${imdbId}&order=seeders&by=DESC"
-  },
-  {
     "name": "thepiratebay",
     "link": "https://thepiratebay.org/search.php?q=${imdbId}"
   },
