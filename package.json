@@ -10,7 +10,7 @@
   "scripts": {
     "rollup:dev": "rollup -c ./rollup.config.js -w",
     "rollup:build": "rollup -c ./rollup.config.js",
-    "ext:dev": "web-ext run --firefox=firefox-developer-edition --source-dir ./dist/  --start-url https://movie.douban.com/",
+    "ext:dev": "web-ext run -t chromium --source-dir ./dist/  --start-url https://movie.douban.com/",
     "ext:build": "web-ext build --overwrite-dest --source-dir ./dist/",
     "build": "npm-run-all rollup:build ext:build",
     "dev": "npm-run-all -p rollup:dev ext:dev"
@@ -22,5 +22,6 @@
     "rollup": "^2.70.1",
     "rollup-plugin-terser": "^7.0.2",
     "web-ext": "^6.8.0"
-  }
+  },
+  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
 }
