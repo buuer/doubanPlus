@@ -2,14 +2,15 @@
   "background": {
     "service_worker": "background.js"
   },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{c3cd7c00-d6c1-4509-b6bb-d767fd51ab56}"
+    }
+  },
   "content_scripts": [
     {
-      "js": [
-        "content.js"
-      ],
-      "matches": [
-        "*://movie.douban.com/subject/*"
-      ]
+      "js": ["content.js"],
+      "matches": ["*://movie.douban.com/subject/*"]
     }
   ],
   "description": "豆瓣电影 资源下载, IMDB评分, MPAA 分级",
@@ -20,13 +21,8 @@
   },
   "manifest_version": 3,
   "name": "douban Plus",
-  "permissions": [
-    "storage"
-  ],
-  "host_permissions": [
-    "*://www.imdb.com/*",
-    "*://raw.githubusercontent.com/*"
-  ],
+  "permissions": ["storage"],
+  "host_permissions": ["*://www.imdb.com/*", "*://raw.githubusercontent.com/*"],
   "action": {
     "default_icon": {
       "16": "images/16.png",
