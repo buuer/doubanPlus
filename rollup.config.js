@@ -1,4 +1,4 @@
-import { terser } from 'rollup-plugin-terser'
+import terser from '@rollup/plugin-terser'
 import json from '@rollup/plugin-json'
 import fs from 'fs-extra'
 
