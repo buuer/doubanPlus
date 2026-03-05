@@ -10,7 +10,7 @@ importers:
     devDependencies:
       '@rollup/plugin-json':
         specifier: ^6.1.0
-        version: 6.1.0(rollup@2.79.2)
+        version: 6.1.0(rollup@2.80.0)
       fs-extra:
         specifier: ^10.0.1
         version: 10.1.0
@@ -18,11 +18,11 @@ importers:
         specifier: ^4.1.5
         version: 4.1.5
       rollup:
-        specifier: ^2.70.1
-        version: 2.79.2
+        specifier: ^2.80.0
+        version: 2.80.0
       rollup-plugin-terser:
         specifier: ^7.0.2
-        version: 7.0.2(rollup@2.79.2)
+        version: 7.0.2(rollup@2.80.0)
       web-ext:
         specifier: ^6.8.0
         version: 6.8.0(@types/download@8.0.1)(body-parser@1.19.1)(download@8.0.0)(express@4.17.2)(safe-compare@1.1.4)
@@ -2014,8 +2014,8 @@ packages:
     peerDependencies:
       rollup: ^2.0.0
 
-  rollup@2.79.2:
-    resolution: {integrity: sha512-fS6iqSPZDs3dr/y7Od6y5nha8dW1YnbgtsyotCVvoFGKbERG++CVRFv1meyGDE1SNItQA8BrnCw7ScdAhRJ3XQ==}
+  rollup@2.80.0:
+    resolution: {integrity: sha512-cIFJOD1DESzpjOBl763Kp1AH7UE/0fcdHe6rZXUdQ9c50uvgigvW97u3IcSeBwOkgqL/PXPBktBCh0KEu5L8XQ==}
     engines: {node: '>=10.0.0'}
     hasBin: true
 
@@ -2696,19 +2696,19 @@ snapshots:
 
   '@mdn/browser-compat-data@4.1.12': {}
 
-  '@rollup/plugin-json@6.1.0(rollup@2.79.2)':
+  '@rollup/plugin-json@6.1.0(rollup@2.80.0)':
     dependencies:
-      '@rollup/pluginutils': 5.3.0(rollup@2.79.2)
+      '@rollup/pluginutils': 5.3.0(rollup@2.80.0)
     optionalDependencies:
-      rollup: 2.79.2
+      rollup: 2.80.0
 
-  '@rollup/pluginutils@5.3.0(rollup@2.79.2)':
+  '@rollup/pluginutils@5.3.0(rollup@2.80.0)':
     dependencies:
       '@types/estree': 1.0.8
       estree-walker: 2.0.2
       picomatch: 4.0.3
     optionalDependencies:
-      rollup: 2.79.2
+      rollup: 2.80.0
 
   '@sindresorhus/is@0.14.0': {}
 
@@ -4859,15 +4859,15 @@ snapshots:
     dependencies:
       glob: 7.2.3
 
-  rollup-plugin-terser@7.0.2(rollup@2.79.2):
+  rollup-plugin-terser@7.0.2(rollup@2.80.0):
     dependencies:
       '@babel/code-frame': 7.26.2
       jest-worker: 26.6.2
-      rollup: 2.79.2
+      rollup: 2.80.0
       serialize-javascript: 4.0.0
       terser: 5.39.0
 
-  rollup@2.79.2:
+  rollup@2.80.0:
     optionalDependencies:
       fsevents: 2.3.3
 
